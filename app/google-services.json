@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "349597773779",
+    "project_id": "web3-examen2-aafe0",
+    "storage_bucket": "web3-examen2-aafe0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:349597773779:android:ab48a17e54712e943e8926",
+        "android_client_info": {
+          "package_name": "com.example.proyectomoviles"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCGs6i_-u6Vt_esya9vWZBv8DkdEg92974"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:349597773779:android:f7baed0fbbd933983e8926",
+        "android_client_info": {
+          "package_name": "com.example.proyectomoviles1muggles"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCGs6i_-u6Vt_esya9vWZBv8DkdEg92974"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
