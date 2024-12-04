@@ -11,7 +11,7 @@ data class Investigation(
     val imagen_2: String = "",
     val imagen_3: String = "",
     val imagen_4: String = "",
-    val pdf: String = "",
+    val PDF: String = "",
     val recomendaciones: String = ""
 )
 
