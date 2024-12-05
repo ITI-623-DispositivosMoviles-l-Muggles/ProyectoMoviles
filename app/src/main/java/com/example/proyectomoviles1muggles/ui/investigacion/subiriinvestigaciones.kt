@@ -9,6 +9,7 @@ import android.net.Uri
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import com.example.proyectomoviles1muggles.ui.users.LoginActivity
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.android.gms.tasks.Task
@@ -37,6 +38,17 @@ class subiriinvestigaciones : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_subiriinvestigaciones)
 
+        // Verificar si el usuario está autenticado al ingresar a la actividad
+        val currentUser = auth.currentUser
+        if (currentUser == null) {
+            // Si no está autenticado, redirigir a la LoginActivity
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            finish()  // Terminar la actividad actual para evitar que el usuario regrese sin estar autenticado
+            return
+        }
+
+        // Inicialización de los elementos de la interfaz
         etTitulo = findViewById(R.id.etTitulo)
         etDescripcion = findViewById(R.id.etDescripcion)
         etConclusiones = findViewById(R.id.etConclusiones)
@@ -93,23 +105,16 @@ class subiriinvestigaciones : AppCompatActivity() {
         val area = etArea.text.toString()
         val ciclo = etCiclo.text.toString()
 
-        // Validar
+        // Validar los campos
         if (titulo.isEmpty() || descripcion.isEmpty() || conclusiones.isEmpty() || recomendaciones.isEmpty() ||
             area.isEmpty() || ciclo.isEmpty() || pdfUri == null || imagenUris.size !in 4..6) {
             Toast.makeText(this, "Por favor completa todos los campos correctamente.", Toast.LENGTH_SHORT).show()
             return
         }
 
-
-        // Verificar si el usuario está autenticado
-        val currentUser = auth.currentUser
-        if (currentUser == null) {
-            Toast.makeText(this, "Debes iniciar sesión para enviar una investigación.", Toast.LENGTH_SHORT).show()
-            return
-        }
-
         // Obtener el correo del usuario autenticado
-        val email = currentUser.email ?: "Desconocido"
+        val currentUser = auth.currentUser
+        val email = currentUser?.email ?: "Desconocido"
 
         // Subir PDF
         val pdfRef = storage.reference.child("investigaciones/$titulo/documento.pdf")
@@ -146,7 +151,7 @@ class subiriinvestigaciones : AppCompatActivity() {
                         firestore.collection("Pruebas").add(investigacion)
                             .addOnSuccessListener {
                                 Toast.makeText(this, "Formulario enviado con éxito", Toast.LENGTH_SHORT).show()
-                                finish()
+                                finish()  // Termina la actividad actual después de enviar el formulario
                             }
                             .addOnFailureListener { e ->
                                 Toast.makeText(this, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
@@ -157,3 +162,4 @@ class subiriinvestigaciones : AppCompatActivity() {
         }
     }
 }
+

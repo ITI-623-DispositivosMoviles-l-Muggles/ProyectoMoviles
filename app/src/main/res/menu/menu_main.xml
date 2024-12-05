@@ -15,4 +15,8 @@
     <item
         android:id="@+id/menu_register"
         android:title="Registrarse"/>
+
+    <item
+        android:id="@+id/menu_logout"
+        android:title="Cerrar sesión"/>
 </menu>

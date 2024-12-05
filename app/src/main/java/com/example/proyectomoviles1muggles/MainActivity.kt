@@ -19,6 +19,7 @@ import com.example.proyectomoviles1muggles.clase.Investigation
 import com.example.proyectomoviles1muggles.ui.investigacion.subiriinvestigaciones
 import com.example.proyectomoviles1muggles.ui.users.LoginActivity
 import com.example.proyectomoviles1muggles.ui.users.SignupActivity
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 class MainActivity : AppCompatActivity() {
@@ -193,6 +194,19 @@ class MainActivity : AppCompatActivity() {
                 val intent = Intent(this, SignupActivity::class.java)
                 startActivity(intent)
                 true
+            }
+            R.id.menu_logout -> {
+                // Llamar al método de Firebase para cerrar sesión
+                FirebaseAuth.getInstance().signOut()
+
+                // Mostrar un mensaje de confirmación
+                Toast.makeText(this, "Sesión cerrada", Toast.LENGTH_SHORT).show()
+
+                // Redirigir al usuario a la pantalla de inicio de sesión o a la actividad de inicio
+                val intent = Intent(this, LoginActivity::class.java)  // Asegúrate de tener LoginActivity
+                startActivity(intent)
+                finish()  // Opcionalmente, termina la actividad actual
+                return true
             }
             else -> super.onOptionsItemSelected(item)
         }
