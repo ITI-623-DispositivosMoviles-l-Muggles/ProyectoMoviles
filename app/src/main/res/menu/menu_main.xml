@@ -1,0 +1,14 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menu_main"
+        android:title="Investigaciones"/>
+
+    <item
+        android:id="@+id/menu_login"
+        android:title="Iniciar Sesión"/>
+
+    <item
+        android:id="@+id/menu_register"
+        android:title="Registrarse"/>
+</menu>

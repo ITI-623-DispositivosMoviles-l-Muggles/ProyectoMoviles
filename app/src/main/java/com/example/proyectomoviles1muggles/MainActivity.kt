@@ -1,17 +1,23 @@
 package com.example.proyectomoviles1muggles
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
-import androidx.activity.enableEdgeToEdge
+import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.proyectomoviles1muggles.adapters.InvestigationAdapter
 import com.example.proyectomoviles1muggles.clase.Investigation
+import com.example.proyectomoviles1muggles.ui.users.LoginActivity
+import com.example.proyectomoviles1muggles.ui.users.SignupActivity
 import com.google.firebase.firestore.FirebaseFirestore
 
 class MainActivity : AppCompatActivity() {
@@ -27,6 +33,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
 
         // Inicialización del RecyclerView y Spinners
         recyclerView = findViewById(R.id.recycler_view)
@@ -151,6 +160,35 @@ class MainActivity : AppCompatActivity() {
 
         // Actualizar el RecyclerView con los resultados filtrados
         recyclerView.adapter = InvestigationAdapter(filteredList)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_main -> {
+                // Acción para el menú de configuración
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+                true
+            }
+            R.id.menu_login -> {
+                // Ir a la actividad de Login
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+                true
+            }
+            R.id.menu_register -> {
+                // Ir a la actividad de Registro
+                val intent = Intent(this, SignupActivity::class.java)
+                startActivity(intent)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 }
 
