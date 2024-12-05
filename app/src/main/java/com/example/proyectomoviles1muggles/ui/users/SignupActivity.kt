@@ -1,9 +1,13 @@
 package com.example.proyectomoviles1muggles.ui.users
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.*
@@ -14,7 +18,11 @@ import com.example.proyectomoviles1muggles.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import java.io.File
 import java.util.*
+
+private const val REQUEST_IMAGE_CAPTURE = 1
+private const val REQUEST_SELECT_IMAGE = 2
 
 class SignupActivity : AppCompatActivity() {
 
@@ -57,18 +65,90 @@ class SignupActivity : AppCompatActivity() {
         }
     }
 
+    private fun verificarPermisosCamara() {
+        if (checkSelfPermission(android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+            tomarFoto()
+        } else {
+            requestPermissions(arrayOf(android.Manifest.permission.CAMERA), REQUEST_IMAGE_CAPTURE)
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQUEST_IMAGE_CAPTURE) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                tomarFoto()
+            } else {
+                Toast.makeText(this, "Permiso de cámara denegado", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+
     private fun seleccionarFoto() {
+        val opciones = arrayOf("Tomar Foto", "Seleccionar desde Galería", "Cancelar")
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Seleccionar una opción")
+        builder.setItems(opciones) { dialog, which ->
+            when (opciones[which]) {
+                "Tomar Foto" -> verificarPermisosCamara()
+                "Seleccionar desde Galería" -> abrirGaleria()
+                "Cancelar" -> dialog.dismiss()
+            }
+        }
+        builder.show()
+    }
+
+    private fun tomarFoto() {
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        if (packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)) {
+            if (intent.resolveActivity(packageManager) != null) {
+                startActivityForResult(intent, REQUEST_IMAGE_CAPTURE)
+            } else {
+                Toast.makeText(this, "No hay una aplicación de cámara disponible", Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            Toast.makeText(this, "Este dispositivo no tiene cámara", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+
+    private fun abrirGaleria() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = "image/*"
-        startActivityForResult(intent, 1000)
+        startActivityForResult(intent, REQUEST_SELECT_IMAGE)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 1000 && resultCode == Activity.RESULT_OK) {
-            fotoUri = data?.data
-            tvFotoSeleccionada.text = "Foto seleccionada"
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                REQUEST_IMAGE_CAPTURE -> {
+                    val imageBitmap = data?.extras?.get("data") as? Bitmap
+                    // Guardar la imagen en un Uri temporal si es necesario
+                    fotoUri = guardarImagenTemporal(imageBitmap)
+                    tvFotoSeleccionada.text = "Foto tomada"
+                }
+                REQUEST_SELECT_IMAGE -> {
+                    fotoUri = data?.data
+                    tvFotoSeleccionada.text = "Foto seleccionada"
+                }
+            }
         }
+    }
+
+    private fun guardarImagenTemporal(bitmap: Bitmap?): Uri? {
+        if (bitmap == null) return null
+        val file = File(cacheDir, "temp_image_${System.currentTimeMillis()}.jpg")
+        file.outputStream().use { out ->
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
+            out.flush()
+        }
+        return Uri.fromFile(file)
     }
 
     private fun registrarUsuario() {

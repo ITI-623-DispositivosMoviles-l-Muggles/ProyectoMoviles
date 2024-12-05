@@ -2,17 +2,26 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- Permisos para funcionalidades básicas de red -->
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- Permisos multimedia según sea necesario -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!-- Permisos para acceso a multimedia y almacenamiento -->
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
-    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" /> <!-- Opcional: Para compatibilidad con versiones anteriores a Android 13 -->
+    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
     <uses-permission
         android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="28" />
+
+    <!-- Permiso para usar la cámara -->
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <!-- Declaración de la característica de la cámara -->
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
 
     <application
         android:allowBackup="true"
@@ -24,6 +33,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ProyectoMoviles1Muggles"
         tools:targetApi="31">
+
+        <!-- Actividades de la aplicación -->
         <activity
             android:name=".ui.users.SignupActivity"
             android:exported="false" />
@@ -35,7 +46,6 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
