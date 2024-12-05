@@ -1,0 +1,64 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/etTitulo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Título de la investigación" />
+
+    <EditText
+        android:id="@+id/etArea"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Area de la investigacion" />
+
+    <EditText
+        android:id="@+id/etCiclo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Ciclo de la investigación" />
+
+    <EditText
+        android:id="@+id/etDescripcion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Descripción (Máx 500 caracteres)"
+        android:maxLength="500" />
+
+    <EditText
+        android:id="@+id/etConclusiones"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Conclusiones (Máx 500 caracteres)"
+        android:maxLength="500" />
+
+    <EditText
+        android:id="@+id/etRecomendaciones"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Recomendaciones (Máx 500 caracteres)"
+        android:maxLength="500" />
+
+    <Button
+        android:id="@+id/btnSeleccionarPdf"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Seleccionar archivo PDF" />
+
+    <Button
+        android:id="@+id/btnSeleccionarImagenes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Seleccionar Imágenes (4-6)" />
+
+    <Button
+        android:id="@+id/btnEnviarFormulario"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Enviar Formulario" />
+
+</LinearLayout>

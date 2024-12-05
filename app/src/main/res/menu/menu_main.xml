@@ -5,6 +5,10 @@
         android:title="Investigaciones"/>
 
     <item
+        android:id="@+id/menu_treparInvestigacion"
+        android:title="Compartir investigacion"/>
+
+    <item
         android:id="@+id/menu_login"
         android:title="Iniciar Sesión"/>
 

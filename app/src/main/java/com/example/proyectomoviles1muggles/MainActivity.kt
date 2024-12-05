@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.proyectomoviles1muggles.adapters.InvestigationAdapter
 import com.example.proyectomoviles1muggles.clase.Investigation
+import com.example.proyectomoviles1muggles.ui.investigacion.subiriinvestigaciones
 import com.example.proyectomoviles1muggles.ui.users.LoginActivity
 import com.example.proyectomoviles1muggles.ui.users.SignupActivity
 import com.google.firebase.firestore.FirebaseFirestore
@@ -172,6 +173,12 @@ class MainActivity : AppCompatActivity() {
             R.id.menu_main -> {
                 // Acción para el menú de configuración
                 val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+                true
+            }
+            R.id.menu_treparInvestigacion -> {
+                // Acción para el menú de configuración
+                val intent = Intent(this, subiriinvestigaciones::class.java)
                 startActivity(intent)
                 true
             }
