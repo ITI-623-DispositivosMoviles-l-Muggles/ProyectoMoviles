@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import android.widget.Toast
 import com.example.proyectomoviles1muggles.R
 import com.example.proyectomoviles1muggles.clase.Investigation
+import com.example.proyectomoviles1muggles.ui.investigacion.InvestigationDetailActivity
 
 class InvestigationAdapter(
     private val investigations: List<Investigation>
@@ -49,6 +50,22 @@ class InvestigationAdapter(
                 Toast.makeText(holder.itemView.context, "PDF no disponible", Toast.LENGTH_SHORT).show()
             }
         }
+        holder.itemView.setOnClickListener {
+            val context = holder.itemView.context
+            val intent = Intent(context, InvestigationDetailActivity::class.java)
+
+            // Pasar los datos de la investigación
+            intent.putExtra("title", investigation.titulo)
+            intent.putExtra("area", investigation.area)
+            intent.putExtra("author", investigation.Correo)
+            intent.putExtra("description", investigation.descripcion)
+            intent.putExtra("conclusion", investigation.Conclusion)  // Agregar conclusión
+            intent.putExtra("recommendation", investigation.recomendaciones)  // Agregar recomendación
+            intent.putExtra("imagePath", investigation.imagen_1)  // Ruta de la imagen
+
+            context.startActivity(intent)
+        }
+
     }
 
     override fun getItemCount() = investigations.size

@@ -15,6 +15,8 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
 import com.google.firebase.auth.FirebaseAuth
+import java.text.SimpleDateFormat
+import java.util.*
 
 class subiriinvestigaciones : AppCompatActivity() {
     private lateinit var etTitulo: EditText
@@ -116,6 +118,9 @@ class subiriinvestigaciones : AppCompatActivity() {
         val currentUser = auth.currentUser
         val email = currentUser?.email ?: "Desconocido"
 
+        // Crear el objeto de fecha en formato ISO 8601 (cadena)
+        val currentDate = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault()).format(Date())
+
         // Subir PDF
         val pdfRef = storage.reference.child("investigaciones/$titulo/documento.pdf")
         pdfUri?.let {
@@ -128,7 +133,7 @@ class subiriinvestigaciones : AppCompatActivity() {
                         imageRef.putFile(imageUri).addOnSuccessListener {
                             imageRef.downloadUrl.addOnSuccessListener { downloadUrl ->
                                 // Asignamos la URL de la imagen al HashMap con la clave correspondiente (Image_1, Image_2, etc.)
-                                imageUrls["Image_${index + 1}"] = downloadUrl.toString()
+                                imageUrls["Imagen_${index + 1}"] = downloadUrl.toString()
                             }
                         }
                     }
@@ -138,12 +143,13 @@ class subiriinvestigaciones : AppCompatActivity() {
                         val investigacion = hashMapOf(
                             "titulo" to titulo,
                             "descripcion" to descripcion,
-                            "conclusiones" to conclusiones,
-                            "recomendaciones" to recomendaciones,
+                            "Conclusion" to conclusiones,
+                            "Recomendaciones" to recomendaciones,
                             "area" to area,
                             "ciclo" to ciclo,  // Agregar ciclo
                             "PDF" to pdfUrl.toString(),
-                            "Correo" to email
+                            "Correo" to email,
+                            "publicationDate" to currentDate  // Agregar la fecha como cadena en formato ISO 8601
                         )
 
                         investigacion.putAll(imageUrls)  // Agregamos las URLs de las imágenes al HashMap de la investigación

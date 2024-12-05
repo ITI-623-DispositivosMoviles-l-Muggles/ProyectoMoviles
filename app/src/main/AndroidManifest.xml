@@ -29,9 +29,11 @@
         android:theme="@style/Theme.ProyectoMoviles1Muggles"
         tools:targetApi="31">
         <activity
-            android:name=".ui.investigacion.subiriinvestigaciones"
+            android:name=".ui.investigacion.InvestigationDetailActivity"
             android:exported="false" />
-        <!-- Actividades de la aplicación -->
+        <activity
+            android:name=".ui.investigacion.subiriinvestigaciones"
+            android:exported="false" /> <!-- Actividades de la aplicación -->
         <activity
             android:name=".ui.users.SignupActivity"
             android:exported="false" />
